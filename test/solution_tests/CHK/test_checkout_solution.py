@@ -21,12 +21,14 @@ class TestCheckout():
         assert checkout_solution.checkout('ABCDABCDADDE') == 315
 
     def test_checkout_when_get_some_free_itens(self):
-        assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 400
+        assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 370
         assert checkout_solution.checkout('BBBBBBBEEEEEEEE') == 395
-        assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 410
+        assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 400
         assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 400
 
-# 8B e 7E - 3B free = 120 + 280 ||
+# 8B e 7E - 3B free = 120 + 280 = 400
+# 7B e 7E - 3B free = 90 + 280  370
+
 
 
 
