@@ -54,6 +54,23 @@ def calculate_more_for_less_offer_price(offer: dict, remaining_amount: int) -> t
     return price, new_remaining_amount
 
 
+def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, special_offers: list[dict], actual_price: int):
+    offer_item = offer.get('item')
+    offer_item_quantity = offer.get('quantity')
+    purchased_item_amount = sku_dict.get(offer_item)
+    free_items_quantity = purchased_item_amount // offer_item_quantity
+    paid_items_amount = amount - free_items_quantity
+    free_items_price = 0
+
+    for offer2 in special_offers:
+        if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+            price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
+            free_items_price += price
+
+    if free_items_price < actual_price:
+        return free_items_price
+    return actual_price
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -80,23 +97,26 @@ def checkout(skus):
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
-                    offer_item = offer.get('item')
-                    offer_item_quantity = offer.get('quantity')
-                    purchased_item_amount = sku_dict.get(offer_item)
-                    free_items_quantity = purchased_item_amount // offer_item_quantity
-                    paid_items_amount = amount - free_items_quantity
-                    aux_price = 0
+                    calculate_free_items_offer_price
 
-                    for offer2 in special_offers:
-                        if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
-                            price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
-                            aux_price += price
-
-                    if aux_price < item_total_price[item]:
-                        item_total_price[item] = aux_price
+                    # offer_item = offer.get('item')
+                    # offer_item_quantity = offer.get('quantity')
+                    # purchased_item_amount = sku_dict.get(offer_item)
+                    # free_items_quantity = purchased_item_amount // offer_item_quantity
+                    # paid_items_amount = amount - free_items_quantity
+                    # aux_price = 0
+                    #
+                    # for offer2 in special_offers:
+                    #     if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+                    #         price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
+                    #         aux_price += price
+                    #
+                    # if aux_price < item_total_price[item]:
+                    #     item_total_price[item] = aux_price
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 

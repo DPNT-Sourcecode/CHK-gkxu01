@@ -23,4 +23,6 @@ class TestCheckout():
     def test_checkout_when_get_some_free_itens(self):
         assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 400
         assert checkout_solution.checkout('BBBBBBBEEEEEEEE') == 395
+        assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 410
+
 
