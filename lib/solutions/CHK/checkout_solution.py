@@ -34,7 +34,9 @@ def checkout(skus):
     checkout_value = 0
     for item, amount in sku_dict.items():
         if item == 'A':
-            if amount
+            special_offer_amount = amount / 3
+            unique_amount = amount % 3
+
 
 
 
