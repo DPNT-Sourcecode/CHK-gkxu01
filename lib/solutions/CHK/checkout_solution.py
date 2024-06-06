@@ -56,10 +56,9 @@ def checkout(skus):
 
     item_total_price = {}
     for item, amount in sku_dict.items():
+        item_total_price[item] = 0
         item_price = get_item_prices(item)
         special_offers = item_price.get('special_offers')
-
-        item_total_price[item] = 0
 
         if special_offers:
             for offer in special_offers:
@@ -77,4 +76,5 @@ def checkout(skus):
             item_total_price[item] += amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
