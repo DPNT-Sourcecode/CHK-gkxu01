@@ -30,12 +30,7 @@ def get_item_prices(sku: str):
         },
         'C': {'price': 20},
         'D': {'price': 15},
-        'E': {
-            'price': 40,
-            # 'special_offers': [
-            #     {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'B'},
-            # ],
-        },
+        'E': {'price': 40},
     }
 
     return prices.get(sku)
@@ -72,6 +67,7 @@ def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, s
 
     return free_items_price, paid_items_amount
 
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -107,3 +103,4 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
