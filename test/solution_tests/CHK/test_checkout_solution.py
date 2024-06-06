@@ -37,11 +37,3 @@ class TestCheckout():
 # 7B e 8E - 4B free = 75 + 320 = 395
 # 8B e 7E - 3B free = 120 + 280 = 400
 # 8B e 8E - 4B free = 90 + 320 = 410
-
-
-
-
-
-
-
-
