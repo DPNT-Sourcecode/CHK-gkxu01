@@ -17,8 +17,8 @@ def get_item_prices(sku: str):
         'A': {
             'price': 50,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
                 {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
             ],
         },
         'B': {
@@ -56,9 +56,9 @@ def checkout(skus):
     checkout_value = 0
     for item, amount in sku_dict.items():
         item_price = get_item_prices(item)
-        special_offer = item_price.get('special_offer')
+        special_offers = item_price.get('special_offers')
 
-        if special_offer:
+        if special_offers:
             quantity = special_offer.get('quantity')
             special_offer_amount = amount // quantity
             unique_amount = amount % quantity
@@ -69,5 +69,6 @@ def checkout(skus):
             checkout_value += amount * item_price.get('price')
 
     return checkout_value
+
 
 
