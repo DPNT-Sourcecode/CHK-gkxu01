@@ -2,7 +2,7 @@ import re
 
 
 def is_invalid_input(skus: str) -> bool:
-    regex = re.compile('^[A-D]+$')
+    regex = re.compile('(^[A-D]+$|^$)')
     return True if not regex.match(skus) else False
 
 
@@ -46,9 +46,3 @@ def checkout(skus):
             checkout_value += amount * item_price.get('price')
 
     return checkout_value
-
-
-
-
-
-
