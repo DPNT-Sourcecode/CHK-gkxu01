@@ -1,4 +1,4 @@
-from solutions.CHK import checkout_solution
+from lib.solutions.CHK import checkout_solution
 
 
 class TestCheckout():
@@ -36,4 +36,5 @@ class TestCheckout():
         assert checkout_solution.checkout('EEB') == 80+0
         assert checkout_solution.checkout('EEEB') == 120+0
         assert checkout_solution.checkout('EEEEBB') == 160+0
+
 
