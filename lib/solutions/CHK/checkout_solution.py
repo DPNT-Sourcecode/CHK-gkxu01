@@ -16,13 +16,12 @@ def get_item_prices(sku: str):
 
     return prices.get(sku)
 
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
     if is_invalid_input(skus):
         return -1
-
-
 
     sku_dict = {}
     for item in skus:
@@ -43,6 +42,11 @@ def checkout(skus):
 
             checkout_value += special_offer_amount * special_offer.get('special_price')
             checkout_value += unique_amount * item_price.get('price')
+        else:
+            checkout_value += amount * item_price.get('price')
+
+    return checkout_value
+
 
 
 
