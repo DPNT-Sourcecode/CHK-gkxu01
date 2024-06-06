@@ -24,12 +24,13 @@ class TestCheckout():
         assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 370
         assert checkout_solution.checkout('BBBBBBBEEEEEEEE') == 395
         assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 400
-        assert checkout_solution.checkout('ABBBBBBBBEEEEEEEE') == 460
+        assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 410
 
 # 7B e 7E - 3B free = 90 + 280 = 370
 # 7B e 8E - 4B free = 75 + 320 = 395
 # 8B e 7E - 3B free = 120 + 280 = 400
 # 8B e 8E - 4B free = 90 + 320 = 410
+
 
 
 
