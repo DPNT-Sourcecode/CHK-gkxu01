@@ -9,14 +9,15 @@ class TestCheckout():
         assert checkout_solution.checkout('') == 0
 
     def test_checkout_when_skus_does_not_have_repeated_items(self):
-        assert checkout_solution.checkout('ABCD') == 115
+        assert checkout_solution.checkout('ABCDE') == 155
 
     def test_checkout_when_skus_only_has_repeated_items(self):
-        assert checkout_solution.checkout('AAAAAA') == 250
+        assert checkout_solution.checkout('AAAAAAAAA') == 380
 
     def test_checkout_when_skus_has_repeated_items_and_single_items(self):
         assert checkout_solution.checkout('AAAAAAAAAAAAAA') == 580
 
     def test_checkout_when_skus_has_mixed_items(self):
-        assert checkout_solution.checkout('ABCDABCDADD') == 275
+        assert checkout_solution.checkout('ABCDABCDADDE') == 315
+
 
