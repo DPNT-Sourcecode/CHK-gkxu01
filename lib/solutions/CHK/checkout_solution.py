@@ -53,6 +53,7 @@ def calculate_more_for_less_offer_price(offer: dict, remaining_amount: int) -> t
 
     return price, new_remaining_amount
 
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -78,23 +79,14 @@ def checkout(skus):
                 if offer.get('type') == OfferTypeEnum.MORE_FOR_LESS:
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
-                    # quantity = offer.get('quantity')
-                    # if remaining_amount < quantity:
-                    #     continue
-                    #
-                    # special_offer_amount = remaining_amount // quantity
-                    # remaining_amount = remaining_amount % quantity
-                    #
-                    # item_total_price[item] += special_offer_amount * offer.get('special_price')
-
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
                     pass  # TODO
-
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
