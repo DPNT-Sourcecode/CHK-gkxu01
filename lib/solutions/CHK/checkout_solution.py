@@ -14,14 +14,27 @@ def is_invalid_input(skus: str) -> bool:
 
 def get_item_prices(sku: str):
     prices = {
-        'A': {'price': 50, 'special_offers': [
-            {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
-            {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
-        ]},
-        'B': {'price': 30, 'special_offers': [{'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45}]},
+        'A': {
+            'price': 50,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+            ],
+        },
+        'B': {
+            'price': 30,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45},
+            ],
+        },
         'C': {'price': 20},
         'D': {'price': 15},
-        'E': {'price': 40},
+        'E': {
+            'price': 40,
+            'special_offers': [
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'B'},
+            ],
+        },
     }
 
     return prices.get(sku)
@@ -56,4 +69,5 @@ def checkout(skus):
             checkout_value += amount * item_price.get('price')
 
     return checkout_value
+
 
