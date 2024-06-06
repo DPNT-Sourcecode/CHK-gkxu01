@@ -41,6 +41,18 @@ def get_item_prices(sku: str):
     return prices.get(sku)
 
 
+def calculate_more_for_less_offer_price(offer: dict, remaining_amount: int) -> tuple[int, int]:
+    quantity = offer.get('quantity')
+    if remaining_amount < quantity:
+        return 0, remaining_amount
+
+    special_offer_amount = remaining_amount // quantity
+    new_remaining_amount = remaining_amount % quantity
+
+    price = special_offer_amount * offer.get('special_price')
+
+    return price, new_remaining_amount
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -64,19 +76,26 @@ def checkout(skus):
         if special_offers:
             for offer in special_offers:
                 if offer.get('type') == OfferTypeEnum.MORE_FOR_LESS:
-                    quantity = offer.get('quantity')
-                    if remaining_amount < quantity:
-                        continue
+                    price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
+                    item_total_price[item] += price
+                    # quantity = offer.get('quantity')
+                    # if remaining_amount < quantity:
+                    #     continue
+                    #
+                    # special_offer_amount = remaining_amount // quantity
+                    # remaining_amount = remaining_amount % quantity
+                    #
+                    # item_total_price[item] += special_offer_amount * offer.get('special_price')
 
-                    special_offer_amount = remaining_amount // quantity
-                    remaining_amount = remaining_amount % quantity
+                elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
+                    pass  # TODO
 
-                    item_total_price[item] += special_offer_amount * offer.get('special_price')
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
