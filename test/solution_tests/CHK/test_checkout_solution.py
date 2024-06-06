@@ -19,5 +19,3 @@ class TestCheckout():
 
     def test_checkout_when_skus_has_mixed_items(self):
         assert checkout_solution.checkout('ABCDABCDADDE') == 315
-
-

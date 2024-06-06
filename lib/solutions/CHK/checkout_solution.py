@@ -80,14 +80,21 @@ def checkout(skus):
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
-                    pass  # TODO
+                    offer_item = offer.get('item')
+                    offer_item_quantity = offer.get('quantity')
+                    purchased_item_amount = sku_dict.get(offer_item)
+                    free_items_quantity = purchased_item_amount // offer_item_quantity
+                    paid_items_amount = amount - free_items_quantity
+                    aux_price = 0
+
+                    for offer2 in special_offers:
+                        if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+                            price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
+                            aux_price += price
+
+                    
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
-
-
-
-
-
