@@ -19,3 +19,8 @@ class TestCheckout():
 
     def test_checkout_when_skus_has_mixed_items(self):
         assert checkout_solution.checkout('ABCDABCDADDE') == 315
+
+    def test_checkout_when_get_some_free_itens(self):
+        assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 400
+        assert checkout_solution.checkout('BBBBBBBEEEEEEEE') == 395
+

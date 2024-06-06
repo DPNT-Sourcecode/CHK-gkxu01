@@ -92,9 +92,11 @@ def checkout(skus):
                             price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
                             aux_price += price
 
-                    
+                    if aux_price < item_total_price[item]:
+                        item_total_price[item] = aux_price
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
