@@ -99,25 +99,11 @@ def checkout(skus):
                     if price < item_total_price[item]:
                         item_total_price[item] = price
 
-                    # offer_item = offer.get('item')
-                    # offer_item_quantity = offer.get('quantity')
-                    # purchased_item_amount = sku_dict.get(offer_item)
-                    # free_items_quantity = purchased_item_amount // offer_item_quantity
-                    # paid_items_amount = amount - free_items_quantity
-                    # aux_price = 0
-                    #
-                    # for offer2 in special_offers:
-                    #     if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
-                    #         price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
-                    #         aux_price += price
-                    #
-                    # if aux_price < item_total_price[item]:
-                    #     item_total_price[item] = aux_price
-
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
