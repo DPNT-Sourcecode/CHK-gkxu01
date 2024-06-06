@@ -2,6 +2,11 @@ from lib.solutions.CHK import checkout_solution
 
 
 class TestCheckout():
+    def test(self):
+        assert checkout_solution.checkout('EEB') == 80 + 0
+        assert checkout_solution.checkout('EEEB') == 120 + 0
+        assert checkout_solution.checkout('EEEEBB') == 160 + 0
+
     def test_checkout_with_inavlid_input(self):
         assert checkout_solution.checkout('ABCDZDCBA') == -1
 
@@ -33,8 +38,5 @@ class TestCheckout():
         assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 400
         assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 410
 
-        assert checkout_solution.checkout('EEB') == 80+0
-        assert checkout_solution.checkout('EEEB') == 120+0
-        assert checkout_solution.checkout('EEEEBB') == 160+0
 
 
