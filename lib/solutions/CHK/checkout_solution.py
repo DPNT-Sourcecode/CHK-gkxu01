@@ -25,15 +25,16 @@ def get_item_prices(sku: str):
             'price': 30,
             'special_offers': [
                 {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45},
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'E'},
             ],
         },
         'C': {'price': 20},
         'D': {'price': 15},
         'E': {
             'price': 40,
-            'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'B'},
-            ],
+            # 'special_offers': [
+            #     {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'B'},
+            # ],
         },
     }
 
@@ -53,23 +54,26 @@ def checkout(skus):
         else:
             sku_dict[item] = 1
 
-    item_values = {}
+    item_checkout = {}
     for item, amount in sku_dict.items():
         item_price = get_item_prices(item)
         special_offers = item_price.get('special_offers')
 
+        item_checkout[item] = 0
+
         if special_offers:
-            quantity = special_offer.get('quantity')
-            special_offer_amount = amount // quantity
-            unique_amount = amount % quantity
+            for offer in special_offers:
+                if offer.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+                    quantity = offer.get('quantity')
+                    if amount < quantity:
+                        continue
 
-            item_values[item] += special_offer_amount * special_offer.get('special_price')
-            checkout_value += unique_amount * item_price.get('price')
+                    special_offer_amount = amount // quantity
+                    unique_amount = amount % quantity
+
+                    item_checkout[item] += special_offer_amount * special_offer.get('special_price')
+                    checkout_value += unique_amount * item_price.get('price')
         else:
-            checkout_value += amount * item_price.get('price')
+            item_checkout[item] += amount * item_price.get('price')
 
-    return checkout_value
-
-
-
-
+    return sum(item_checkout.values())
