@@ -58,6 +58,9 @@ def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, s
     offer_item = offer.get('item')
     offer_item_quantity = offer.get('quantity')
     purchased_item_amount = sku_dict.get(offer_item)
+    if not purchased_item_amount:
+        return None, None
+
     free_items_quantity = purchased_item_amount // offer_item_quantity
     paid_items_amount = amount - free_items_quantity
     free_items_price = 0
@@ -95,14 +98,16 @@ def checkout(skus):
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
-                    price, remaining_amount = calculate_free_items_offer_price(offer, sku_dict, amount, special_offers)
-                    if price < item_total_price[item]:
+                    price, new_remaining_amount = calculate_free_items_offer_price(offer, sku_dict, amount, special_offers)
+                    if price and price < item_total_price[item]:
                         item_total_price[item] = price
+                        remaining_amount = new_remaining_amount
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
 

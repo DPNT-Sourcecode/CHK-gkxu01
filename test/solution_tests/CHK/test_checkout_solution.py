@@ -8,6 +8,13 @@ class TestCheckout():
     def test_checkout_with_empty_input(self):
         assert checkout_solution.checkout('') == 0
 
+    def test_checkout_with_only_one_item(self):
+        assert checkout_solution.checkout('A') == 50
+        assert checkout_solution.checkout('B') == 30
+        assert checkout_solution.checkout('C') == 20
+        assert checkout_solution.checkout('D') == 15
+        assert checkout_solution.checkout('E') == 40
+
     def test_checkout_when_skus_does_not_have_repeated_items(self):
         assert checkout_solution.checkout('ABCDE') == 155
 
@@ -26,12 +33,11 @@ class TestCheckout():
         assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 400
         assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 410
 
-        assert checkout_solution.checkout('B') == 30
-
 # 7B e 7E - 3B free = 90 + 280 = 370
 # 7B e 8E - 4B free = 75 + 320 = 395
 # 8B e 7E - 3B free = 120 + 280 = 400
 # 8B e 8E - 4B free = 90 + 320 = 410
+
 
 
 
