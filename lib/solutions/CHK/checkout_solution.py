@@ -1,17 +1,27 @@
 import re
+from enum import Enum
+
+
+class OfferTypeEnum(Enum):
+    MORE_FOR_LESS = 1
+    FREE_ITEM = 2
 
 
 def is_invalid_input(skus: str) -> bool:
-    regex = re.compile('(^[A-D]+$|^$)')
+    regex = re.compile('(^[A-E]+$|^$)')
     return True if not regex.match(skus) else False
 
 
 def get_item_prices(sku: str):
     prices = {
-        'A': {'price': 50, 'special_offer': {'quantity': 3, 'special_price': 130}},
-        'B': {'price': 30, 'special_offer': {'quantity': 2, 'special_price': 45}},
+        'A': {'price': 50, 'special_offers': [
+            {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+            {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+        ]},
+        'B': {'price': 30, 'special_offers': [{'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45}]},
         'C': {'price': 20},
         'D': {'price': 15},
+        'E': {'price': 40},
     }
 
     return prices.get(sku)
@@ -46,3 +56,4 @@ def checkout(skus):
             checkout_value += amount * item_price.get('price')
 
     return checkout_value
+
