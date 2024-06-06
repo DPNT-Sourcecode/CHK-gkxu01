@@ -19,5 +19,6 @@ def checkout(skus):
         else:
             sku_dict[item] = 1
 
-    for item, amount in sku_dict:
+    for item, amount in sku_dict.items():
+
 
