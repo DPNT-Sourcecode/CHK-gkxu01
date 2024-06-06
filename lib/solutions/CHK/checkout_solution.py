@@ -60,21 +60,23 @@ def checkout(skus):
         item_price = get_item_prices(item)
         special_offers = item_price.get('special_offers')
 
+        remaining_amount = amount
         if special_offers:
             for offer in special_offers:
                 if offer.get('type') == OfferTypeEnum.MORE_FOR_LESS:
                     quantity = offer.get('quantity')
-                    if amount < quantity:
+                    if remaining_amount < quantity:
                         continue
 
-                    special_offer_amount = amount // quantity
-                    unique_amount = amount % quantity
+                    special_offer_amount = remaining_amount // quantity
+                    remaining_amount = remaining_amount % quantity
 
-                    item_total_price[item] += special_offer_amount * special_offer.get('special_price')
-                    checkout_value += unique_amount * item_price.get('price')
-        else:
-            item_total_price[item] += amount * item_price.get('price')
+                    item_total_price[item] += special_offer_amount * offer.get('special_price')
+
+        if remaining_amount > 0:
+            item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
