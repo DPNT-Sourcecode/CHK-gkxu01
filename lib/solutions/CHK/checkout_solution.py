@@ -54,12 +54,12 @@ def checkout(skus):
         else:
             sku_dict[item] = 1
 
-    item_checkout = {}
+    item_total_price = {}
     for item, amount in sku_dict.items():
         item_price = get_item_prices(item)
         special_offers = item_price.get('special_offers')
 
-        item_checkout[item] = 0
+        item_total_price[item] = 0
 
         if special_offers:
             for offer in special_offers:
@@ -71,9 +71,10 @@ def checkout(skus):
                     special_offer_amount = amount // quantity
                     unique_amount = amount % quantity
 
-                    item_checkout[item] += special_offer_amount * special_offer.get('special_price')
+                    item_total_price[item] += special_offer_amount * special_offer.get('special_price')
                     checkout_value += unique_amount * item_price.get('price')
         else:
-            item_checkout[item] += amount * item_price.get('price')
+            item_total_price[item] += amount * item_price.get('price')
 
-    return sum(item_checkout.values())
+    return sum(item_total_price.values())
+
