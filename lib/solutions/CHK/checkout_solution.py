@@ -198,7 +198,10 @@ def calculate_buy_of_groups_offer_price(groups: dict):
         products_chunks = split_into_chunks(sorted_prices_list, 3)
         size = len(products_chunks)
         if size:
-            total_for_group = (size - 1) * group_price + sum(products_chunks[-1])
+            if len(products_chunks[-1]) == 3:
+                total_for_group = size * group_price
+            else:
+                total_for_group = (size - 1) * group_price + sum(products_chunks[-1])
 
         group_prices[group_name] = total_for_group
 
@@ -248,6 +251,7 @@ def checkout(skus):
     group_prices = calculate_buy_of_groups_offer_price(groups)
 
     return sum(product_total_price.values()) + sum(group_prices.values())
+
 
 
 
