@@ -5,7 +5,7 @@ from enum import Enum
 class OfferType(Enum):
     MORE_FOR_LESS = 1
     FREE_ITEM = 2
-    BUY_OF_GROUP = 3
+    BUY_ANY_3_OF_GROUP = 3
 
 
 def is_invalid_input(skus: str) -> bool:
@@ -91,13 +91,13 @@ def get_product_data(sku: str):
         'S': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'T': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'U': {
@@ -117,19 +117,19 @@ def get_product_data(sku: str):
         'X': {
             'price': 17,
             'special_offers': [
-                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'Y': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'Z': {
             'price': 21,
             'special_offers': [
-                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
     }
@@ -185,11 +185,11 @@ def checkout(skus):
         return -1
 
     sku_dict = get_sku_dict(skus)
-    item_total_price = {}
+    product_total_price = {}
     groups = {}
 
     for sku, amount in sku_dict.items():
-        item_total_price[sku] = 0
+        product_total_price[sku] = 0
         product_data = get_product_data(sku)
         special_offers = product_data.get('special_offers')
 
@@ -198,15 +198,15 @@ def checkout(skus):
             for offer in special_offers:
                 if offer.get('type') == OfferType.MORE_FOR_LESS:
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
-                    item_total_price[sku] += price
+                    product_total_price[sku] += price
                 elif offer.get('type') == OfferType.FREE_ITEM:
                     price, new_remaining_amount = calculate_free_items_offer_price(
                         offer, product_data, sku_dict, amount, special_offers,
                     )
-                    if price is not None and (price <= item_total_price[sku] or item_total_price[sku] == 0):
-                        item_total_price[sku] = price
+                    if price is not None and (price <= product_total_price[sku] or product_total_price[sku] == 0):
+                        product_total_price[sku] = price
                         remaining_amount = new_remaining_amount
-                elif offer.get('type') == OfferType.BUY_OF_GROUP:
+                elif offer.get('type') == OfferType.BUY_ANY_3_OF_GROUP:
                     group: list[str] = offer.get('group', []).sort()
                     group_name = ''.join(group)
                     if groups.get(group_name):
@@ -216,17 +216,23 @@ def checkout(skus):
                     remaining_amount = 0
 
         if remaining_amount > 0:
-            item_total_price[sku] += remaining_amount * product_data.get('price')
+            product_total_price[sku] += remaining_amount * product_data.get('price')
 
-    for group_skus, size in groups.items():
+    for group_skus, _ in groups.items():
         group_sku_dict = get_sku_dict(group_skus)
 
         product_list = []
         for product_sku in group_skus:
             product_list.append({'sku': product_sku, 'price': group_sku_dict.get(product_sku).get('price')})
 
+        sorted_product_list = sorted(product_list, key=lambda x: x['price'], reverse=True)
+        total_for_group = 0
 
 
 
 
-    return sum(item_total_price.values())
+
+
+
+    return sum(product_total_price.values())
+
