@@ -227,8 +227,3 @@ def checkout(skus):
 
 
     return sum(item_total_price.values())
-
-
-
-
-
