@@ -3,7 +3,7 @@ from lib.solutions.CHK import checkout_solution
 
 class TestCheckout():
     def test_checkout_with_inavlid_input(self):
-        assert checkout_solution.checkout('ABCDZDCBA') == -1
+        assert checkout_solution.checkout('ABCD-DCBA') == -1
 
     def test_checkout_with_empty_input(self):
         assert checkout_solution.checkout('') == 0
@@ -43,3 +43,9 @@ class TestCheckout():
         assert checkout_solution.checkout('FFFF') == 30
         assert checkout_solution.checkout('FFFFF') == 40
         assert checkout_solution.checkout('FFFFFF') == 40
+
+    def test(self):
+        assert checkout_solution.checkout('RRRQ') == 150
+        assert checkout_solution.checkout('RRRRQ') == 200
+        assert checkout_solution.checkout('RRRRRRQQ') == 300
+
