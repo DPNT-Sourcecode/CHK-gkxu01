@@ -12,7 +12,7 @@ def is_invalid_input(skus: str) -> bool:
     return True if not regex.match(skus) else False
 
 
-def get_item_prices(sku: str):
+def get_item_data(sku: str):
     prices = {
         'A': {
             'price': 50,
@@ -55,7 +55,7 @@ def calculate_more_for_less_offer_price(offer: dict, remaining_amount: int) -> t
     return price, new_remaining_amount
 
 
-def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, special_offers: list[dict]):
+def calculate_free_items_offer_price(offer: dict, item_data: dict, sku_dict: dict, amount: int, special_offers: list[dict]):
     offer_item = offer.get('item')
     offer_item_quantity = offer.get('quantity')
     minimal_quantity = offer.get('required_quantity')
@@ -64,7 +64,8 @@ def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, s
         return None, None
 
     if minimal_quantity:
-        
+        amount_left = purchased_item_amount - (purchased_item_amount // minimal_quantity)
+        return amount_left * item_data.get('price'), 0
 
     free_items_quantity = purchased_item_amount // offer_item_quantity
     paid_items_amount = amount - free_items_quantity
@@ -94,8 +95,8 @@ def checkout(skus):
     item_total_price = {}
     for item, amount in sku_dict.items():
         item_total_price[item] = 0
-        item_price = get_item_prices(item)
-        special_offers = item_price.get('special_offers')
+        item_data = get_item_data(item)
+        special_offers = item_data.get('special_offers')
 
         remaining_amount = amount
         if special_offers:
@@ -104,15 +105,16 @@ def checkout(skus):
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
-                    price, new_remaining_amount = calculate_free_items_offer_price(offer, sku_dict, amount, special_offers)
+                    price, new_remaining_amount = calculate_free_items_offer_price(offer, item_data, sku_dict, amount, special_offers)
                     if price is not None and price <= item_total_price[item]:
                         item_total_price[item] = price
                         remaining_amount = new_remaining_amount
 
         if remaining_amount > 0:
-            item_total_price[item] += remaining_amount * item_price.get('price')
+            item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
