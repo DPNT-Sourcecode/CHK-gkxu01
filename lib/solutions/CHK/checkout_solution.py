@@ -186,6 +186,7 @@ def checkout(skus):
     sku_dict = get_sku_dict(skus)
 
     item_total_price = {}
+
     for item, amount in sku_dict.items():
         item_total_price[item] = 0
         item_data = get_item_data(item)
@@ -211,3 +212,4 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
