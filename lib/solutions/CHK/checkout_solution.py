@@ -186,6 +186,7 @@ def checkout(skus):
 
     sku_dict = get_sku_dict(skus)
     item_total_price = {}
+    groups = {}
 
     for sku, amount in sku_dict.items():
         item_total_price[sku] = 0
@@ -207,12 +208,20 @@ def checkout(skus):
                         remaining_amount = new_remaining_amount
                 elif offer.get('type') == OfferType.BUY_OF_GROUP:
                     group: list[str] = offer.get('group', []).sort()
-                    group_name = group.
-                    pass
+                    group_name = ''.join(group)
+                    if groups[group_name]:
+                        groups[group_name] += amount
+                    else:
+                        groups[group_name] = amount
+                    remaining_amount = 0
 
         if remaining_amount > 0:
             item_total_price[sku] += remaining_amount * product_data.get('price')
 
+    for name, group in groups.items():
+
+
     return sum(item_total_price.values())
+
 
 
