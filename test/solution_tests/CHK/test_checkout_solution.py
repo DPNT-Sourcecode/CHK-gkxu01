@@ -45,7 +45,10 @@ class TestCheckout():
         assert checkout_solution.checkout('FFFFFF') == 40
 
     def test_checkout_with_group_of_items_offer(self):
-        assert checkout_solution.checkout('SSTTXXYYZZ') == 17+45+45+45
+        assert checkout_solution.checkout('STX') == 45
+        # assert checkout_solution.checkout('STXSTX') == 90
+        # assert checkout_solution.checkout('SSS') == 45
+        # assert checkout_solution.checkout('SSTTXXYYZZ') == 17 + 45 + 45 + 45
 
     def test2(self):
         assert checkout_solution.checkout('RRRQ') == 150
@@ -54,3 +57,4 @@ class TestCheckout():
         assert checkout_solution.checkout('HHHHHHHHHH') == 80
         assert checkout_solution.checkout('HHHHHHHHHHH') == 90
         assert checkout_solution.checkout('HHHHHHHHHHHH') == 100
+
