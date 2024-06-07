@@ -13,6 +13,16 @@ def is_invalid_input(skus: str) -> bool:
     return True if not regex.match(skus) else False
 
 
+def get_input_dict(skus: str) -> dict:
+    sku_dict = {}
+    for item in skus:
+        if sku_dict.get(item) is not None:
+            sku_dict[item] += 1
+        else:
+            sku_dict[item] = 1
+
+    return sku_dict
+
 def get_item_data(sku: str):
     prices = {
         'A': {
@@ -198,11 +208,13 @@ def checkout(skus):
                     if price is not None and (price <= item_total_price[item] or item_total_price[item] == 0):
                         item_total_price[item] = price
                         remaining_amount = new_remaining_amount
+                elif offer.get('type') == OfferType.BUY_OF_GROUP:
 
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
