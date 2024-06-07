@@ -41,8 +41,8 @@ def get_item_data(sku: str):
         'H': {
             'price': 10,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 45},
                 {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 10, 'special_price': 80},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 45},
             ],
         },
         'I': {'price': 35},
@@ -87,8 +87,8 @@ def get_item_data(sku: str):
         'V': {
             'price': 50,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 90},
                 {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 90},
             ],
         },
         'W': {'price': 20},
@@ -172,6 +172,7 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
