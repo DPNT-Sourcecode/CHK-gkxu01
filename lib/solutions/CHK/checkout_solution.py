@@ -193,6 +193,8 @@ def checkout(skus):
 
         remaining_amount = amount
         if special_offers:
+            buy_group_offers = []
+
             for offer in special_offers:
                 if offer.get('type') == OfferType.MORE_FOR_LESS:
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
@@ -205,12 +207,13 @@ def checkout(skus):
                         item_total_price[item] = price
                         remaining_amount = new_remaining_amount
                 elif offer.get('type') == OfferType.BUY_OF_GROUP:
-
+                    pass  # TODO
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
