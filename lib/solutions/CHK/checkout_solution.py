@@ -223,11 +223,10 @@ def checkout(skus):
 
         product_list = []
         for product_sku in group_skus:
-            product_list.append({'sku': product_sku, 'price': group_sku_dict. })
+            product_list.append({'sku': product_sku, 'price': group_sku_dict.get(product_sku).get('price')})
+
+
 
 
 
     return sum(item_total_price.values())
-
-
-
