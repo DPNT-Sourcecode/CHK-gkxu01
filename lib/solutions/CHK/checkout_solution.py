@@ -24,6 +24,13 @@ def get_sku_dict(skus: str) -> dict:
     return sku_dict
 
 
+def split_into_chunks(array: list[any], size: int) -> list[list[any]]:
+    chunks = []
+    for idx in range (0, len(array), size):
+        chunks.append(array[idx: idx + size])
+    return  chunks
+
+
 def get_product_data(sku: str):
     prices = {
         'A': {
@@ -235,4 +242,5 @@ def checkout(skus):
 
 
     return sum(product_total_price.values())
+
 
