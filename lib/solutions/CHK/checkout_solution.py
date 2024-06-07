@@ -24,7 +24,7 @@ def get_sku_dict(skus: str) -> dict:
     return sku_dict
 
 
-def get_item_data(sku: str):
+def get_product_data(sku: str):
     prices = {
         'A': {
             'price': 50,
@@ -177,6 +177,7 @@ def calculate_free_items_offer_price(offer: dict, item_data: dict, sku_dict: dic
 def calculate_buy_of_group_offer_price():
     pass
 
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
@@ -184,32 +185,34 @@ def checkout(skus):
         return -1
 
     sku_dict = get_sku_dict(skus)
-
     item_total_price = {}
 
-    for item, amount in sku_dict.items():
-        item_total_price[item] = 0
-        item_data = get_item_data(item)
-        special_offers = item_data.get('special_offers')
+    for sku, amount in sku_dict.items():
+        item_total_price[sku] = 0
+        product_data = get_product_data(sku)
+        special_offers = product_data.get('special_offers')
 
         remaining_amount = amount
         if special_offers:
             for offer in special_offers:
                 if offer.get('type') == OfferType.MORE_FOR_LESS:
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
-                    item_total_price[item] += price
+                    item_total_price[sku] += price
                 elif offer.get('type') == OfferType.FREE_ITEM:
                     price, new_remaining_amount = calculate_free_items_offer_price(
-                        offer, item_data, sku_dict, amount, special_offers,
+                        offer, product_data, sku_dict, amount, special_offers,
                     )
-                    if price is not None and (price <= item_total_price[item] or item_total_price[item] == 0):
-                        item_total_price[item] = price
+                    if price is not None and (price <= item_total_price[sku] or item_total_price[sku] == 0):
+                        item_total_price[sku] = price
                         remaining_amount = new_remaining_amount
                 elif offer.get('type') == OfferType.BUY_OF_GROUP:
-                    pass  # TODO
+                    group: list[str] = offer.get('group', []).sort()
+                    group_name = group.
+                    pass
 
         if remaining_amount > 0:
-            item_total_price[item] += remaining_amount * item_data.get('price')
+            item_total_price[sku] += remaining_amount * product_data.get('price')
 
     return sum(item_total_price.values())
+
 
