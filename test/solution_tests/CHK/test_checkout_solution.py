@@ -2,15 +2,6 @@ from lib.solutions.CHK import checkout_solution
 
 
 class TestCheckout():
-    def test(self):
-        assert checkout_solution.checkout('EEB') == 80 + 0
-
-    def test2(self):
-        assert checkout_solution.checkout('EEEB') == 120 + 0
-
-    def test3(self):
-        assert checkout_solution.checkout('EEEEBB') == 160 + 0
-
     def test_checkout_with_inavlid_input(self):
         assert checkout_solution.checkout('ABCDZDCBA') == -1
 
@@ -37,11 +28,10 @@ class TestCheckout():
         assert checkout_solution.checkout('ABCDABCDADDE') == 315
 
     def test_checkout_when_get_some_free_itens(self):
+        assert checkout_solution.checkout('EEB') == 80
+        assert checkout_solution.checkout('EEEB') == 120
+        assert checkout_solution.checkout('EEEEBB') == 160
         assert checkout_solution.checkout('BBBBBBBEEEEEEE') == 370
         assert checkout_solution.checkout('BBBBBBBEEEEEEEE') == 395
         assert checkout_solution.checkout('BBBBBBBBEEEEEEE') == 400
         assert checkout_solution.checkout('BBBBBBBBEEEEEEEE') == 410
-
-
-
-

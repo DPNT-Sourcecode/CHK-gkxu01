@@ -103,6 +103,3 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
-
-
-
