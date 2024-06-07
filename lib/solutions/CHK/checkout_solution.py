@@ -54,13 +54,13 @@ def get_item_data(sku: str):
             ],
         },
         'L': {'price': 90},
-        'M': {'price': 15},
-        'N': {
-            'price': 40,
+        'M': {
+            'price': 15,
             'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'M'},
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'N'},
             ],
         },
+        'N': {'price': 40},
         'O': {'price': 10},
         'P': {
             'price': 50,
@@ -72,14 +72,10 @@ def get_item_data(sku: str):
             'price': 30,
             'special_offers': [
                 {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 80},
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'R'},
             ],
         },
-        'R': {
-            'price': 50,
-            'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'Q'},
-            ],
-        },
+        'R': {'price': 50},
         'S': {'price': 30},
         'T': {'price': 20},
         'U': {
@@ -176,6 +172,7 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
