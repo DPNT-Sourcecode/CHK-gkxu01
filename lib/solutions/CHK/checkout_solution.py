@@ -85,7 +85,7 @@ def get_item_data(sku: str):
         'U': {
             'price': 40,
             'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'U'}, # TODO add required
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'U', 'required_quantity': 4},
             ],
         },
         'V': {
@@ -176,5 +176,6 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
