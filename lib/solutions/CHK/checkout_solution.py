@@ -8,7 +8,7 @@ class OfferTypeEnum(Enum):
 
 
 def is_invalid_input(skus: str) -> bool:
-    regex = re.compile('(^[A-E]+$|^$)')
+    regex = re.compile('(^[A-F]+$|^$)')
     return True if not regex.match(skus) else False
 
 
@@ -31,6 +31,12 @@ def get_item_prices(sku: str):
         'C': {'price': 20},
         'D': {'price': 15},
         'E': {'price': 40},
+        'F': {
+            'price': 10,
+            'special_offers': [
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'F', 'required_quantity': 3},
+            ],
+        },
     }
 
     return prices.get(sku)
@@ -103,3 +109,4 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
