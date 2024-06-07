@@ -5,7 +5,7 @@ from enum import Enum
 class OfferType(Enum):
     MORE_FOR_LESS = 1
     FREE_ITEM = 2
-    BUY_ANY_3_OF_GROUP = 3
+    BUY_ANY_3_OF_GROUP_FOR_45 = 3
 
 
 def is_invalid_input(skus: str) -> bool:
@@ -26,9 +26,9 @@ def get_sku_dict(skus: str) -> dict:
 
 def split_into_chunks(array: list[any], size: int) -> list[list[any]]:
     chunks = []
-    for idx in range (0, len(array), size):
+    for idx in range(0, len(array), size):
         chunks.append(array[idx: idx + size])
-    return  chunks
+    return chunks
 
 
 def get_product_data(sku: str):
@@ -98,13 +98,13 @@ def get_product_data(sku: str):
         'S': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP_FOR_45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'T': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP_FOR_45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'U': {
@@ -124,19 +124,19 @@ def get_product_data(sku: str):
         'X': {
             'price': 17,
             'special_offers': [
-                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP_FOR_45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'Y': {
             'price': 20,
             'special_offers': [
-                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP_FOR_45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
         'Z': {
             'price': 21,
             'special_offers': [
-                {'type': OfferType.BUY_ANY_3_OF_GROUP, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+                {'type': OfferType.BUY_ANY_3_OF_GROUP_FOR_45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
             ],
         },
     }
@@ -213,7 +213,7 @@ def checkout(skus):
                     if price is not None and (price <= product_total_price[sku] or product_total_price[sku] == 0):
                         product_total_price[sku] = price
                         remaining_amount = new_remaining_amount
-                elif offer.get('type') == OfferType.BUY_ANY_3_OF_GROUP:
+                elif offer.get('type') == OfferType.BUY_ANY_3_OF_GROUP_FOR_45:
                     group: list[str] = offer.get('group', []).sort()
                     group_name = ''.join(group)
                     if groups.get(group_name):
@@ -230,10 +230,18 @@ def checkout(skus):
 
         product_list = []
         for product_sku in group_skus:
-            product_list.append({'sku': product_sku, 'price': group_sku_dict.get(product_sku).get('price')})
+            product_list.append({
+                'sku': product_sku,
+                'price': group_sku_dict.get(product_sku).get('price'),
+                'group_price': 45
+            })
 
         sorted_product_list = sorted(product_list, key=lambda x: x['price'], reverse=True)
         total_for_group = 0
+        products_chunks = split_into_chunks(sorted_product_list, 3)
+        size = len(products_chunks)
+
+
 
 
 
@@ -242,5 +250,6 @@ def checkout(skus):
 
 
     return sum(product_total_price.values())
+
 
 
