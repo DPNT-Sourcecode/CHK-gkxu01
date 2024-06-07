@@ -44,12 +44,14 @@ class TestCheckout():
         assert checkout_solution.checkout('FFFFF') == 40
         assert checkout_solution.checkout('FFFFFF') == 40
 
-    def test_new_products(self):
+    def test_checkout_with_group_of_items_offer(self):
+        assert checkout_solution.checkout('SSTTXXYYZZ') == 17+45+45+45
+
+    def test2(self):
         assert checkout_solution.checkout('RRRQ') == 150
         assert checkout_solution.checkout('RRRRQ') == 200
         assert checkout_solution.checkout('RRRRRRQQ') == 300
-
-    def test2(self):
         assert checkout_solution.checkout('HHHHHHHHHH') == 80
-        # assert checkout_solution.checkout('HHHHHHHHHHH') == 90
-        # assert checkout_solution.checkout('HHHHHHHHHHHH') == 100
+        assert checkout_solution.checkout('HHHHHHHHHHH') == 90
+        assert checkout_solution.checkout('HHHHHHHHHHHH') == 100
+
