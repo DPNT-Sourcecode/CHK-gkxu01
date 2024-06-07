@@ -2,10 +2,10 @@ import re
 from enum import Enum
 
 
-class OfferTypeEnum(Enum):
+class OfferType(Enum):
     MORE_FOR_LESS = 1
     FREE_ITEM = 2
-    BUY_IN_GROUP
+    BUY_OF_GROUP = 3
 
 
 def is_invalid_input(skus: str) -> bool:
@@ -18,15 +18,15 @@ def get_item_data(sku: str):
         'A': {
             'price': 50,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
             ],
         },
         'B': {
             'price': 30,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45},
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'E'},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 2, 'special_price': 45},
+                {'type': OfferType.FREE_ITEM, 'quantity': 2, 'item': 'E'},
             ],
         },
         'C': {'price': 20},
@@ -35,15 +35,15 @@ def get_item_data(sku: str):
         'F': {
             'price': 10,
             'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'F', 'required_quantity': 3},
+                {'type': OfferType.FREE_ITEM, 'quantity': 2, 'item': 'F', 'required_quantity': 3},
             ],
         },
         'G': {'price': 20},
         'H': {
             'price': 10,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 10, 'special_price': 80},
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 45},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 10, 'special_price': 80},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 5, 'special_price': 45},
             ],
         },
         'I': {'price': 35},
@@ -51,14 +51,14 @@ def get_item_data(sku: str):
         'K': {
             'price': 70,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 120},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 2, 'special_price': 120},
             ],
         },
         'L': {'price': 90},
         'M': {
             'price': 15,
             'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'N'},
+                {'type': OfferType.FREE_ITEM, 'quantity': 3, 'item': 'N'},
             ],
         },
         'N': {'price': 40},
@@ -66,36 +66,61 @@ def get_item_data(sku: str):
         'P': {
             'price': 50,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
             ],
         },
         'Q': {
             'price': 30,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 80},
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'R'},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 3, 'special_price': 80},
+                {'type': OfferType.FREE_ITEM, 'quantity': 3, 'item': 'R'},
             ],
         },
         'R': {'price': 50},
-        'S': {'price': 20},
-        'T': {'price': 20},
+        'S': {
+            'price': 20,
+            'special_offers': [
+                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+            ],
+        },
+        'T': {
+            'price': 20,
+            'special_offers': [
+                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+            ],
+        },
         'U': {
             'price': 40,
             'special_offers': [
-                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'U', 'required_quantity': 4},
+                {'type': OfferType.FREE_ITEM, 'quantity': 3, 'item': 'U', 'required_quantity': 4},
             ],
         },
         'V': {
             'price': 50,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 90},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+                {'type': OfferType.MORE_FOR_LESS, 'quantity': 2, 'special_price': 90},
             ],
         },
         'W': {'price': 20},
-        'X': {'price': 17},
-        'Y': {'price': 20},
-        'Z': {'price': 21},
+        'X': {
+            'price': 17,
+            'special_offers': [
+                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+            ],
+        },
+        'Y': {
+            'price': 20,
+            'special_offers': [
+                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+            ],
+        },
+        'Z': {
+            'price': 21,
+            'special_offers': [
+                {'type': OfferType.BUY_OF_GROUP, 'quantity': 3, 'special_price': 45, 'group': ['S', 'T', 'X', 'Y', 'Z']},
+            ],
+        },
     }
 
     return prices.get(sku)
@@ -131,12 +156,15 @@ def calculate_free_items_offer_price(offer: dict, item_data: dict, sku_dict: dic
     free_items_price = 0
 
     for offer2 in special_offers:
-        if offer2.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+        if offer2.get('type') == OfferType.MORE_FOR_LESS:
             price, paid_items_amount = calculate_more_for_less_offer_price(offer2, paid_items_amount)
             free_items_price += price
 
     return free_items_price, paid_items_amount
 
+
+def calculate_buy_of_group_offer_price():
+    pass
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -160,17 +188,21 @@ def checkout(skus):
         remaining_amount = amount
         if special_offers:
             for offer in special_offers:
-                if offer.get('type') == OfferTypeEnum.MORE_FOR_LESS:
+                if offer.get('type') == OfferType.MORE_FOR_LESS:
                     price, remaining_amount = calculate_more_for_less_offer_price(offer, remaining_amount)
                     item_total_price[item] += price
-                elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
-                    price, new_remaining_amount = calculate_free_items_offer_price(offer, item_data, sku_dict, amount, special_offers)
+                elif offer.get('type') == OfferType.FREE_ITEM:
+                    price, new_remaining_amount = calculate_free_items_offer_price(
+                        offer, item_data, sku_dict, amount, special_offers,
+                    )
                     if price is not None and (price <= item_total_price[item] or item_total_price[item] == 0):
                         item_total_price[item] = price
                         remaining_amount = new_remaining_amount
+
 
         if remaining_amount > 0:
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
