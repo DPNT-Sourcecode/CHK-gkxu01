@@ -225,12 +225,13 @@ def checkout(skus):
         if remaining_amount > 0:
             product_total_price[sku] += remaining_amount * product_data.get('price')
 
-    for group_skus, _ in groups.items():
-        group_sku_dict = get_sku_dict(group_skus)
+    for group_skus, sku_size in groups.items():
+        # group_sku_dict = get_sku_dict(group_skus)
 
         prices_list = []
         for product_sku in group_skus:
-            prices_list.append(group_sku_dict.get(product_sku).get('price'))
+            price = get_product_data(product_sku).get('price')
+            prices_list.append(product_data_2.get(product_sku).get('price'))
 
         sorted_prices_list = sorted(prices_list, reverse=True)
         total_for_group = 0
@@ -242,10 +243,3 @@ def checkout(skus):
         product_total_price[group_skus] = total_for_group
 
     return sum(product_total_price.values())
-
-
-
-
-
-
-
