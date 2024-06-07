@@ -37,6 +37,26 @@ def get_item_data(sku: str):
                 {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 2, 'item': 'F', 'required_quantity': 3},
             ],
         },
+        'G': {'price': 20},
+        'H': {'price': 20},
+        'I': {'price': 20},
+        'J': {'price': 20},
+        'K': {'price': 20},
+        'L': {'price': 20},
+        'M': {'price': 20},
+        'N': {'price': 20},
+        'O': {'price': 20},
+        'P': {'price': 20},
+        'Q': {'price': 20},
+        'R': {'price': 20},
+        'S': {'price': 20},
+        'T': {'price': 20},
+        'U': {'price': 20},
+        'V': {'price': 20},
+        'W': {'price': 20},
+        'X': {'price': 20},
+        'Y': {'price': 20},
+        'Z': {'price': 20},
     }
 
     return prices.get(sku)
@@ -114,3 +134,4 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
