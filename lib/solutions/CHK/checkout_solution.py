@@ -251,8 +251,3 @@ def checkout(skus):
     group_prices = calculate_buy_of_groups_offer_price(groups)
 
     return sum(product_total_price.values()) + sum(group_prices.values())
-
-
-
-
-
