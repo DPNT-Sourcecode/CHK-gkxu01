@@ -38,25 +38,67 @@ def get_item_data(sku: str):
             ],
         },
         'G': {'price': 20},
-        'H': {'price': 20},
-        'I': {'price': 20},
-        'J': {'price': 20},
-        'K': {'price': 20},
-        'L': {'price': 20},
-        'M': {'price': 20},
-        'N': {'price': 20},
-        'O': {'price': 20},
-        'P': {'price': 20},
-        'Q': {'price': 20},
-        'R': {'price': 20},
-        'S': {'price': 20},
+        'H': {
+            'price': 10,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 45},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 10, 'special_price': 80},
+            ],
+        },
+        'I': {'price': 35},
+        'J': {'price': 60},
+        'K': {
+            'price': 80,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 150},
+            ],
+        },
+        'L': {'price': 90},
+        'M': {'price': 15},
+        'N': {
+            'price': 40,
+            'special_offers': [
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'M'},
+            ],
+        },
+        'O': {'price': 10},
+        'P': {
+            'price': 50,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 5, 'special_price': 200},
+            ],
+        },
+        'Q': {
+            'price': 30,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 80},
+            ],
+        },
+        'R': {
+            'price': 50,
+            'special_offers': [
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'Q'},
+            ],
+        },
+        'S': {'price': 30},
         'T': {'price': 20},
-        'U': {'price': 20},
-        'V': {'price': 20},
+        'U': {
+            'price': 40,
+            'special_offers': [
+                {'type': OfferTypeEnum.FREE_ITEM, 'quantity': 3, 'item': 'U'}, # TODO add required
+            ],
+        },
+        'V': {
+            'price': 50,
+            'special_offers': [
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 90},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 3, 'special_price': 130},
+            ],
+        },
         'W': {'price': 20},
-        'X': {'price': 20},
-        'Y': {'price': 20},
-        'Z': {'price': 20},
+        'X': {'price': 90},
+        'Y': {'price': 10},
+        'Z': {'price': 50},
     }
 
     return prices.get(sku)
@@ -134,4 +176,5 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
