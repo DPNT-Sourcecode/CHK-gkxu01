@@ -157,7 +157,7 @@ def calculate_more_for_less_offer_price(offer: dict, remaining_amount: int) -> t
     return price, new_remaining_amount
 
 
-def calculate_free_items_offer_price(offer: dict, item_data: dict, sku_dict: dict, amount: int, special_offers: list[dict]):
+def calculate_free_items_offer_price(offer: dict, product_data: dict, sku_dict: dict, amount: int, special_offers: list[dict]):
     offer_item = offer.get('item')
     offer_item_quantity = offer.get('quantity')
     minimal_quantity = offer.get('required_quantity')
@@ -167,7 +167,7 @@ def calculate_free_items_offer_price(offer: dict, item_data: dict, sku_dict: dic
 
     if minimal_quantity:
         amount_left = purchased_item_amount - (purchased_item_amount // minimal_quantity)
-        return amount_left * item_data.get('price'), 0
+        return amount_left * product_data.get('price'), 0
 
     free_items_quantity = purchased_item_amount // offer_item_quantity
     paid_items_amount = amount - free_items_quantity
@@ -242,6 +242,7 @@ def checkout(skus):
         product_total_price[group_skus] = total_for_group
 
     return sum(product_total_price.values())
+
 
 
 
