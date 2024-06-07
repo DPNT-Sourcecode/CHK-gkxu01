@@ -5,6 +5,7 @@ from enum import Enum
 class OfferTypeEnum(Enum):
     MORE_FOR_LESS = 1
     FREE_ITEM = 2
+    BUY_IN_GROUP
 
 
 def is_invalid_input(skus: str) -> bool:
@@ -48,9 +49,9 @@ def get_item_data(sku: str):
         'I': {'price': 35},
         'J': {'price': 60},
         'K': {
-            'price': 80,
+            'price': 70,
             'special_offers': [
-                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 150},
+                {'type': OfferTypeEnum.MORE_FOR_LESS, 'quantity': 2, 'special_price': 120},
             ],
         },
         'L': {'price': 90},
@@ -76,7 +77,7 @@ def get_item_data(sku: str):
             ],
         },
         'R': {'price': 50},
-        'S': {'price': 30},
+        'S': {'price': 20},
         'T': {'price': 20},
         'U': {
             'price': 40,
@@ -92,9 +93,9 @@ def get_item_data(sku: str):
             ],
         },
         'W': {'price': 20},
-        'X': {'price': 90},
-        'Y': {'price': 10},
-        'Z': {'price': 50},
+        'X': {'price': 17},
+        'Y': {'price': 20},
+        'Z': {'price': 21},
     }
 
     return prices.get(sku)
@@ -172,3 +173,4 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
