@@ -106,7 +106,7 @@ def checkout(skus):
                     item_total_price[item] += price
                 elif offer.get('type') == OfferTypeEnum.FREE_ITEM:
                     price, new_remaining_amount = calculate_free_items_offer_price(offer, item_data, sku_dict, amount, special_offers)
-                    if price is not None and price <= item_total_price[item]:
+                    if price is not None and (price <= item_total_price[item] or item_total_price[item] == 0):
                         item_total_price[item] = price
                         remaining_amount = new_remaining_amount
 
@@ -114,6 +114,7 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
+
 
 
 
