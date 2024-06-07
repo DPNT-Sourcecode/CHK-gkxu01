@@ -181,8 +181,10 @@ def calculate_free_items_offer_price(offer: dict, product_data: dict, sku_dict: 
     return free_items_price, paid_items_amount
 
 
-def calculate_buy_of_group_offer_price(groups: dict):
-    for group_skus, sku_count in groups.items():
+def calculate_buy_of_groups_offer_price(groups: dict):
+    group_prices = {}
+
+    for group_name, sku_count in groups.items():
         prices_list = []
         for data in sku_count:
             for sku_letter, sku_counter in data.items():
@@ -198,7 +200,9 @@ def calculate_buy_of_group_offer_price(groups: dict):
         if size:
             total_for_group = (size - 1) * group_price + sum(products_chunks[-1])
 
-        return total_for_group
+        group_prices[group_name] = total_for_group
+
+    return group_prices
 
 
 # noinspection PyUnusedLocal
@@ -241,24 +245,10 @@ def checkout(skus):
         if remaining_amount > 0:
             product_total_price[sku] += remaining_amount * product_data.get('price')
 
-    for group_skus, sku_count in groups.items():
-        prices_list = []
-        for data in sku_count:
-            for sku_letter, sku_counter in data.items():
-                price = get_product_data(sku_letter).get('price')
-                for idx in range(sku_counter):
-                    prices_list.append(price)
+    group_prices = calculate_buy_of_groups_offer_price(groups)
 
-        sorted_prices_list = sorted(prices_list, reverse=True)
-        total_for_group = 0
-        group_price = 45
-        products_chunks = split_into_chunks(sorted_prices_list, 3)
-        size = len(products_chunks)
-        if size:
-            total_for_group = (size - 1) * group_price + sum(products_chunks[-1])
-        product_total_price[group_skus] = total_for_group
+    return sum(product_total_price.values()) + sum(group_prices.values())
 
-    return sum(product_total_price.values())
 
 
 
