@@ -220,12 +220,14 @@ def checkout(skus):
 
     for group_skus, size in groups.items():
         group_sku_dict = get_sku_dict(group_skus)
-        
-        for product in group_skus:
 
+        product_list = []
+        for product_sku in group_skus:
+            product_list.append({'sku': product_sku, 'price': group_sku_dict. })
 
 
 
     return sum(item_total_price.values())
+
 
 
