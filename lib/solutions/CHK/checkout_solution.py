@@ -209,7 +209,7 @@ def checkout(skus):
                 elif offer.get('type') == OfferType.BUY_OF_GROUP:
                     group: list[str] = offer.get('group', []).sort()
                     group_name = ''.join(group)
-                    if groups[group_name]:
+                    if groups.get(group_name):
                         groups[group_name] += amount
                     else:
                         groups[group_name] = amount
@@ -222,6 +222,7 @@ def checkout(skus):
 
 
     return sum(item_total_price.values())
+
 
 
 
