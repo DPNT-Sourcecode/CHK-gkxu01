@@ -214,7 +214,7 @@ def checkout(skus):
                         product_total_price[sku] = price
                         remaining_amount = new_remaining_amount
                 elif offer.get('type') == OfferType.BUY_ANY_3_OF_GROUP_FOR_45:
-                    group: list[str] = offer.get('group', []).sort()
+                    group: list[str] = offer.get('group', [])
                     group_name = ''.join(group)
                     if groups.get(group_name):
                         groups[group_name] += amount
@@ -242,6 +242,7 @@ def checkout(skus):
         product_total_price[group_skus] = total_for_group
 
     return sum(product_total_price.values())
+
 
 
 
