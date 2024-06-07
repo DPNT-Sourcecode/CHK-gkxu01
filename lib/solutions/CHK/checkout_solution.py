@@ -211,9 +211,3 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_data.get('price')
 
     return sum(item_total_price.values())
-
-
-
-
-
-
