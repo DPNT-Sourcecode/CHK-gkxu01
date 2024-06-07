@@ -218,10 +218,16 @@ def checkout(skus):
         if remaining_amount > 0:
             item_total_price[sku] += remaining_amount * product_data.get('price')
 
-    for name, group in groups.items():
+    for name, size in groups.items():
+        group_sku_dict = get_sku_dict(name)
+        purchased_products = [
+            {}
+        ]
+
 
 
     return sum(item_total_price.values())
+
 
 
 
