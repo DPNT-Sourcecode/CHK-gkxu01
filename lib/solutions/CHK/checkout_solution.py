@@ -228,28 +228,21 @@ def checkout(skus):
     for group_skus, _ in groups.items():
         group_sku_dict = get_sku_dict(group_skus)
 
-        product_list = []
+        prices_list = []
         for product_sku in group_skus:
-            product_list.append({
-                'sku': product_sku,
-                'price': group_sku_dict.get(product_sku).get('price'),
-                'group_price': 45
-            })
+            prices_list.append(group_sku_dict.get(product_sku).get('price'))
 
-        sorted_product_list = sorted(product_list, key=lambda x: x['price'], reverse=True)
+        sorted_prices_list = sorted(prices_list, reverse=True)
         total_for_group = 0
-        products_chunks = split_into_chunks(sorted_product_list, 3)
+        group_price = 45
+        products_chunks = split_into_chunks(sorted_prices_list, 3)
         size = len(products_chunks)
-
-
-
-
-
-
-
-
+        if size:
+            total_for_group = (size - 1) * group_price + sum(products_chunks[-1])
+        product_total_price[group_skus] = total_for_group
 
     return sum(product_total_price.values())
+
 
 
 
