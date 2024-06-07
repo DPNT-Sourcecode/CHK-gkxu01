@@ -63,6 +63,9 @@ def calculate_free_items_offer_price(offer: dict, sku_dict: dict, amount: int, s
     if not purchased_item_amount or (minimal_quantity and purchased_item_amount < minimal_quantity):
         return None, None
 
+    if minimal_quantity:
+        
+
     free_items_quantity = purchased_item_amount // offer_item_quantity
     paid_items_amount = amount - free_items_quantity
     free_items_price = 0
@@ -110,5 +113,6 @@ def checkout(skus):
             item_total_price[item] += remaining_amount * item_price.get('price')
 
     return sum(item_total_price.values())
+
 
 
